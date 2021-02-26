@@ -1,0 +1,6 @@
+--2020-11-03 02:00:48--  http://api.openweathermap.org/data/2.5/weather?id=3081368
+Resolving api.openweathermap.org (api.openweathermap.org)... 37.139.1.159, 188.166.16.132, 82.196.7.246, ...
+Connecting to api.openweathermap.org (api.openweathermap.org)|37.139.1.159|:80... connected.
+HTTP request sent, awaiting response... 401 Unauthorized
+
+Username/Password Authentication Failed.

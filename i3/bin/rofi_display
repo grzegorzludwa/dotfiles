@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# Manage displays with rofi
+
+option=`echo -e "eDP-1\neDP-1+DP-1-1\nDP-1-1\nThe same" | rofi -dmenu -p display:`
+
+case $option in
+	eDP-1) 
+		xrandr --output eDP-1 --auto --output DP-1-1 --off ;;
+	DP-1-1) 
+		xrandr --output eDP-1 --off --output DP-1-1 --auto ;;
+	eDP-1+DP-1-1) 
+		xrandr --output eDP-1 --auto --output DP-1-1 --right-of eDP-1 --auto;;
+	'The same') 
+		xrandr --output eDP-1 --auto --output DP-1-1 --auto --same-as eDP-1 ;;
+esac
+
+# Copy
+#displays=`xrandr --listmonitors | sed 1d | awk '{print $4}' | awk '{printf $1" "}'`
+##echo "the array contains ${#displays[@]} elements"
+#echo "${displays[0]}"
+#for i in $(seq 0 ${#displays[@]}); do echo $i; done
+#for i in "${displays[@]}"; do echo "$i"; done
+
+#option=`python3 ~/.config/i3/bin/get_displays.py | rofi -dmenu -p display:`
+
+#if [ $option == 'All the same' ]; then
+
+#option=`echo -e "suspend\nlock screen\nlogout\nreboot\npoweroff\nKill user $USER" | rofi -width 600 -dmenu -p system:`
+#case $option in
+#    suspend)
+#        sudo  /usr/bin/systemctl suspend
+#        ;;
+#    'lock screen')
+#        i3lock -i /home/koromicha/Pictures/linuxtux.png
+#        ;;
+#    logout)
+#        i3-nagbar -t warning -m 'Are you sure you  want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'
+#        ;;
+#    reboot)
+#        /usr/bin/systemctl reboot
+#        ;;
+#    poweroff)
+#        /usr/bin/systemctl poweroff
+#        ;;
+#    'kill user $USER')
+#        loginctl kill-user $USER
+#        ;;
+#esac

@@ -1,0 +1,2 @@
+inotifywait -qq -e delete_self ~/.i3geoweather/i3geoweather.txt && cat ~/.i3geoweather/i3geoweather.txt
+

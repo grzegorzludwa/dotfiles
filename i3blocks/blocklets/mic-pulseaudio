@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+# Displays the default device, volume, and mute status for i3blocks
+
+set -a
+
+MIC_ON_SYMBOL=${MIC_ON_SYMBOL:-'&#xf130;'}
+
+MIC_MUTED_SYMBOL=${MIC_MUTED_SYMBOL:-'&#xf131;'}
+
+DEFAULT_COLOR=${DEFAULT_COLOR:-"#0096C7"}
+MUTED_COLOR=${MUTED_COLOR:-"#a0a0a0"}
+
+LONG_FORMAT=${LONG_FORMAT:-'${SYMB} [${INDEX}:${NAME}]'}
+SHORT_FORMAT=${SHORT_FORMAT:-'${SYMB} [${INDEX}]'}
+USE_ALSA_NAME=${USE_ALSA_NAME:-1}
+USE_DESCRIPTION=${USE_DESCRIPTION:-0}
+
+function move_sources_to_new_default {
+    DEFAULT_SOURCE=$1
+    pacmd list-source-outputs | grep index: | grep -o '[0-9]\+' | while read SOURCE
+    do
+        pacmd move-source-output $SOURCE $DEFAULT_SOURCE
+    done
+}
+
+function set_default_mic_device_next {
+    inc=${1:-1}
+    num_devices=$(pacmd list-sources | grep -c index:)
+    sink_arr=($(pacmd list-sources | grep index: | grep -o '[0-9]\+'))
+    default_source_index=$(( $(pacmd list-sources | grep index: | grep -no '*' | grep -o '^[0-9]\+') - 1 ))
+    default_source_index=$(( ($default_source_index + $num_devices + $inc) % $num_devices ))
+    default_source=${sink_arr[$default_source_index]}
+    pacmd set-default-source $default_source
+    move_sources_to_new_default $default_source
+}
+
+case "$BLOCK_BUTTON" in
+    1) pactl set-source-mute `pacmd list-sources | grep index: | grep -no '*' | grep -o '^[0-9]\+'` toggle ;;
+    2) pavucontrol & ;;
+    3) set_default_mic_device_next ;;
+    #1) set_default_mic_device_next ;;
+    #3) set_default_mic_device_next -1 ;;
+esac
+
+function print_format {
+   echo "$1" | envsubst '${SYMB}${VOL}${INDEX}${NAME}'
+}
+
+function print_block {
+    ACTIVE=$(pacmd list-sources | grep "state\: RUNNING" -B4 -A7 | grep "index:\|name:\|volume: \(front\|mono\)\|muted:")
+    [ -z "$ACTIVE" ] && ACTIVE=$(pacmd list-sources | grep "index:\|name:\|volume: \(front\|mono\)\|muted:" | grep -A3 '*')
+    for name in INDEX NAME VOL MUTED; do
+        read $name
+    done < <(echo "$ACTIVE")
+    INDEX=$(echo "$INDEX" | grep -o '[0-9]\+')
+    VOL=$(echo "$VOL" | grep -o "[0-9]*%" | head -1 )
+    VOL="${VOL%?}"
+
+    NAME=$(echo "$NAME" | sed \
+'s/.*<.*\.\(.*\)>.*/\1/; t;'\
+'s/.*<\(.*\)>.*/\1/; t;'\
+'s/.*/unknown/')
+
+    if [[ $USE_ALSA_NAME == 1 ]] ; then
+        ALSA_NAME=$(pacmd list-sources |\
+awk '/^\s*\*/{f=1}/^\s*index:/{f=0}f' |\
+grep "alsa.name\|alsa.mixer_name" |\
+head -n1 |\
+sed 's/.*= "\(.*\)".*/\1/')
+        NAME=${ALSA_NAME:-$NAME}
+    elif [[ $USE_DESCRIPTION == 1 ]] ; then
+        DESCRIPTION=$(pacmd list-sources |\
+awk '/^\s*\*/{f=1}/^\s*index:/{f=0}f' |\
+grep "device.description" |\
+head -n1 |\
+sed 's/.*= "\(.*\)".*/\1/')
+        NAME=${DESCRIPTION:-$NAME}
+    fi
+
+    if [[ $MUTED =~ "no" ]] ; then
+        SYMB=$MIC_ON_SYMBOL
+        COLOR=$DEFAULT_COLOR
+    else
+        SYMB=$MIC_MUTED_SYMBOL
+        COLOR=$MUTED_COLOR
+    fi
+
+    print_format "$LONG_FORMAT"
+    print_format "$SHORT_FORMAT"
+    echo "$COLOR"
+}
+
+print_block

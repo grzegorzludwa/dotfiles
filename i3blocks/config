@@ -1,0 +1,132 @@
+# i3blocks config file
+#
+# Please see man i3blocks for a complete reference!
+# The man page is also hosted at http://vivien.github.io/i3blocks
+#
+# List of valid properties:
+#
+# align
+# color
+# command
+# full_text
+# instance
+# interval
+# label
+# min_width
+# name
+# separator
+# separator_block_width
+# short_text
+# signal
+# urgent
+
+# Global properties
+#
+# The top properties below are applied to every block, but can be overridden.
+# Each block command defaults to the script name to avoid boilerplate.
+command=~/.config/i3blocks/blocklets/$BLOCK_NAME
+#separator=false
+separator_block_width=13
+markup=pango
+align=right
+color=#B4B7B4
+
+[music]
+label= 🎧
+interval=1
+#instance=spotify
+signal=3
+
+##Network Bandwidth
+#[bandwidth]
+#interval=1
+#color=#d33682
+
+# RAM usage
+[memory]
+interval=2
+label=&#xf0e4; 
+##color=#4CAF50
+color=#87AFAF
+separator=false
+
+# CPU Usage
+[cpu_usage]
+label=&#xf05b; 
+interval=2
+color=#87AFAF
+#T_WARN=50
+#T_CRIT=80
+#separator=false
+
+## /home Partition Usage
+#[disk-home]
+#label=&#xf015;
+#interval=30
+#color=#586E75
+
+## Network Interface IP
+#[iface]
+#color=#B4B7B4
+#interval=30
+#label=&#xf0ec; 
+
+## Wi-Fi SSID - script not working
+#[ssid]
+#label=&#xf1eb; 
+#color=#d33682
+#interval=30
+#INTERFACE=wlp2s0
+
+# Screen brightness
+[brightness]
+label=&#xf042;
+interval=once
+signal=2
+color=#738899
+separator=false
+
+#Battery
+[battery]
+interval=30
+label=&#xf0e7;
+separator=false
+color=#4CAF50
+
+#[volume]
+##label=VOL
+##label=♪
+#label=&#xf028;
+#instance=Master
+##instance=PCM
+#interval=once
+#signal=10
+#color=#0096C7
+
+[volume-pulseaudio]
+interval=once
+signal=10
+separator=false
+
+[mic-pulseaudio]
+interval=once
+signal=11
+
+[weather]
+instance=3081368
+interval=100
+
+#[weather-auto]
+#interval=repeat
+#command=inotifywait -qq -e delete_self ~/.i3geoweather/i3geoweather.txt && cat ~/.i3geoweather/i3geoweather.txt
+
+# Date and Time Calendar
+[time]
+interval=1
+color=#50C878
+#label=&#xf073;
+
+# Battery level notification
+[batnotify]
+interval=10
+separator_block_width=4
