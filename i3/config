@@ -327,7 +327,7 @@ exec_always feh --bg-scale ~/Pictures/wallpaper.jpg
 exec_always --no-startup-id nm-applet
 exec_always --no-startup-id blueman-applet
 exec --no-startup-id bluetooth off
-exec --no-startup-id numlock on
+exec --no-startup-id numlockx on
 #exec --no-startup-id pactl set-default-sink alsa_output.pci-0000_00_1f.3.analog-stereo
 #exec --no-startup-id pactl set-default-source alsa_input.pci-0000_00_1f.3.analog-stereo
 exec --no-startup-id /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
