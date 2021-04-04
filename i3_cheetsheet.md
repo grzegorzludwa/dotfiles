@@ -7,15 +7,29 @@ sudo turbostat -i 0.1 | cut -f1-4,32,33,48-50
 ## Deps
 
 ``` bash
-apt install feh fonts-font-awesome rofi pulseaudio-utils xbacklight alsa-tools clipit gcc git terminator locate pcmanfm acpi libnotify-bin blueman redshift numlockx
+apt install feh fonts-font-awesome rofi pulseaudio-utils alsa-tools clipit gcc git terminator locate pcmanfm acpi libnotify-bin blueman redshift numlockx
 ```
 
-### xbacklight doesn't work
+### install ybacklight (alternative of xbacklight)
 
 ``` bash
 git clone https://github.com/szekelyszilv/ybacklight.git
 cd ybacklight/src
 gcc ybacklight.c -o /usr/bin/ybacklight
+```
+
+#### ybacklight desn't have permissions to change brightness
+
+As a vendor use your device (eg. `acpi_video0` or `intel_backlight`).
+
+``` bash
+cat /etc/udev/rules.d/backlight.rules
+ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="<vendor>", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness"
+ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="<vendor>", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
+```
+
+``` bash
+usermod -aG video <user>
 ```
 
 ### Shutter

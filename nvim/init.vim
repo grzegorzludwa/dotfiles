@@ -6,7 +6,7 @@ let autoload_plug_path = stdpath('data') . '/site/autoload/plug.vim'
 if !filereadable(autoload_plug_path)
   silent execute '!curl -fLo ' . autoload_plug_path . '  --create-dirs 
       \ "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+
 endif
 unlet autoload_plug_path
 
@@ -31,6 +31,10 @@ Plug 'vim-scripts/DoxygenToolkit.vim'               " for doxygen support
 
 " To run nvim inside browser
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(69) } }
+
+Plug 'vim-airline/vim-airline'                      " for bottom status line
+
+Plug 'tpope/vim-fugitive'                           " for git integration
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -92,6 +96,7 @@ source $HOME/.config/nvim/plug-config/vim-comentary.vim
 source $HOME/.config/nvim/plug-config/markdown-preview.vim
 source $HOME/.config/nvim/plug-config/doxygen-toolkit.vim
 source $HOME/.config/nvim/plug-config/firenvim.vim
+source $HOME/.config/nvim/plug-config/vim-airline.vim
 source $HOME/.config/nvim/plug-config/startify.vim
 source $HOME/.config/nvim/plug-config/nerdtree.vim
 source $HOME/.config/nvim/plug-config/fzf.vim

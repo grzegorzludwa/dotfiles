@@ -21,7 +21,9 @@ set_from_resource $white       color15 #000000
  set $darkblack   #1d2021
  set $transparent #00000000
 
-set $mod Mod4
+
+# was set $mod Mod4
+set $mod Mod1
 set $alt Mod1
 set $terminator terminator
 
@@ -133,7 +135,7 @@ set $ws2 "2: &#xf269;"
 set $ws3 "3: &#xf121;"
 set $ws4 "4: &#xf07c;"
 set $ws5 "5: &#xf108;"
-set $ws6 "6: &#xf198;"
+set $ws6 "6: &#xf086;"
 set $ws7 "7: &#xf0e0;"
 set $ws8 "8: &#xf17a;"
 set $ws9 "9: &#xf144;"
@@ -170,6 +172,8 @@ assign [class="Foxit Reader"] $ws3
 #assign [class="Pcmanfm"] $ws4
 assign [class="VirtualBox"] $ws5
 assign [class="Virt-manager"] $ws5
+assign [class="Wfica"] $ws5
+
 assign [class="(?i)skype"] $ws6
 assign [class="(?i)slack"] $ws6
 assign [class="Thunderbird"] $ws7
@@ -216,6 +220,8 @@ mode "resize" {
 # Press $mod+o followed by either f, s, m, v, Esc or Return {ENTER),
 # to launch Skype, lxappearance, thunderbird, VirtualBox, pcmanfm file manager, 
 # or return to the default mode, respectively.
+#
+# "terminator -e ranger"
 set $mode_launcher Launcher
 bindsym $mod+o mode "$mode_launcher"
 
