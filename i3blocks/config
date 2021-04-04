@@ -113,7 +113,6 @@ interval=once
 signal=11
 
 [weather]
-instance=3081368
 interval=100
 
 #[weather-auto]

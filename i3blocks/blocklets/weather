@@ -3,8 +3,16 @@
 
 API_KEY=""
 
-# Check on http://openweathermap.org/find
-CITY_ID="${BLOCK_INSTANCE}"
+# Get location based on IP
+MY_IP="$(dig +short myip.opendns.com @resolver1.opendns.com)"
+LOCATION_URL="http://ip-api.com/json/${MY_IP}?fields=city"
+LOCATION_INFO=$(wget -qO- "${LOCATION_URL}")
+
+CITY_IP_BASED=$(echo "${LOCATION_INFO}" | grep -o -e '\"city\":\"[a-Z]*\"' | awk -F ':' '{print $2}' | tr -d '"')
+
+# Set city name from config or default (based on IP)
+CITY_NAME=${BLOCK_INSTANCE:-${CITY_IP_BASED}}
+#echo $CITY_NAME
 
 URGENT_LOWER=0
 URGENT_HIGHER=30
@@ -18,7 +26,7 @@ ICON_FOG=""
 
 SYMBOL_CELSIUS="℃"
 
-WEATHER_URL="http://api.openweathermap.org/data/2.5/weather?id=${CITY_ID}&appid=${API_KEY}&units=metric"
+WEATHER_URL="http://api.openweathermap.org/data/2.5/weather?q=${CITY_NAME}&appid=${API_KEY}&units=metric"
 
 WEATHER_INFO=$(wget -qO- "${WEATHER_URL}")
 
