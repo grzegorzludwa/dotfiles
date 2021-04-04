@@ -7,10 +7,10 @@ URGENT_VALUE=10
 
 # Left click
 if [[ "${BLOCK_BUTTON}" -eq 3 ]]; then
-  sudo ybacklight -inc 5 
+  ybacklight -inc 5 
 # Right click
 elif [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
-  sudo ybacklight -dec 5
+  ybacklight -dec 5
 fi
 
 if [[ "${METHOD}" = "xrandr" ]]; then

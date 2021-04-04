@@ -280,8 +280,8 @@ bindsym $alt+Control+h exec --no-startup-id playerctl previous
 
 # Sreen brightness controls
 # enable passwordless sudo for ybacklight. echo "grzegorz ALL=NOPASSWD: /usr/bin/ybacklight" > /etc/sudoers.d/ybacklight
-bindsym XF86MonBrightnessUp exec sudo ybacklight -inc 5 && pkill -RTMIN+2 i3blocks # increase screen brightness
-bindsym XF86MonBrightnessDown exec sudo ybacklight -dec 5 && pkill -RTMIN+2 i3blocks # decrease screen brightness
+bindsym XF86MonBrightnessUp exec ybacklight -inc 5 && pkill -RTMIN+2 i3blocks # increase screen brightness
+bindsym XF86MonBrightnessDown exec ybacklight -dec 5 && pkill -RTMIN+2 i3blocks # decrease screen brightness
 
 #######  I3 BLOCKS  #############################################################################
 # i3blocks
