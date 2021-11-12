@@ -1,4 +1,9 @@
 {
-  "clangd.path": "/home/grzegorz/.config/coc/extensions/coc-clangd-data/install/11.0.0/clangd_11.0.0/bin/clangd",
-   "python.jediEnabled": false
+  "python.analysis.extraPaths": ["/home/gld/.local/lib/python3.6/site-packages",
+                                 "/home/developer/.local/lib/python3.8/site-packages",
+                                 "/usr/local/lib/python3.8/site-packages"],
+
+  "yaml.schemas": {
+    "kubernetes": "/*.yaml"
+  }
 }
