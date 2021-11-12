@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 # Manage displays with rofi
 
-option=`echo -e "eDP-1\neDP-1+DP-1-1\nDP-1-1\nThe same" | rofi -dmenu -p display:`
+option=`echo -e "External\nAll\nLaptop\nThe same" | rofi -dmenu -p display:`
 
 case $option in
-	eDP-1) 
-		xrandr --output eDP-1 --auto --output DP-1-1 --off ;;
-	DP-1-1) 
-		xrandr --output eDP-1 --off --output DP-1-1 --auto ;;
-	eDP-1+DP-1-1) 
-		xrandr --output eDP-1 --auto --output DP-1-1 --right-of eDP-1 --auto;;
+  External)
+        xrandr --output eDP-1-1 --off --output DP-1-1-8 --primary --auto --output DP-1-1-1-8 --left-of DP-1-1-8 --auto ;;
+	All) 
+		xrandr --output eDP-1-1 --primary --auto --output DP-1-1-8 --left-of eDP-1-1 --auto --output DP-1-1-1-8 --left-of DP-1-1-8 --auto ;;
+	Laptop) 
+		xrandr --output eDP-1-1 --auto --output DP-1-1-8 --off --output DP-1-1-1-8 --off ;;
 	'The same') 
-		xrandr --output eDP-1 --auto --output DP-1-1 --auto --same-as eDP-1 ;;
+		xrandr --output eDP-1-1 --auto --output DP-1-1-8 --auto --same-as eDP-1-1 --output DP-1-1-1-8 --auto --same-as DP-1-1-8 ;;
 esac
 
 # Copy
