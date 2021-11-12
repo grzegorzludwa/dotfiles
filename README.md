@@ -61,6 +61,11 @@ sudo dpkg -i ripgrep_12.1.1_amd64.deb
 
 ```
 
+### Bash autoomplete for tmux
+```
+https://russellparker.me/post/2018/02/16/tmux-bash-autocomplete/
+```
+
 ## Paths
 
 ~/.config/i3
